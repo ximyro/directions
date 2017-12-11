@@ -1,25 +1,29 @@
 module Coster
   class DirectionsClient
 
-    HOST = "localhost:9292"
-    PATH = "/api/destintations/find" 
+    PATH = "/api/directions/find"
 
-    def initialize
+    def initialize(options)
+      @options = options
     end
 
-    def get(source:, destination:)
-      connection.post("/api/destinations/find", params:
+    def get(source, destination)
+      connection.post(PATH, json:
         {
          source: source,
          destination: destination
         }
-      ) 
+      )
     end
 
     private
 
+    def host
+      @options.fetch(:host)
+    end
+
     def connection
-      @connection = HTTP.persistent(HOST)
+      @connection = HTTP.persistent(host)
     end
   end
 end

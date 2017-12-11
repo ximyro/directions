@@ -1,3 +1,5 @@
+require_relative './lib/calculate_costs'
+require_relative './lib/directions_client'
 module Coster
   class API < Grape::API
     version 'v1', using: :header, vendor: 'coster'
@@ -18,7 +20,7 @@ module Coster
 				end
       end
       post :calculate do
-        use_case = CalculateCosts.new("http://localhost:9293")
+        use_case = CalculateCosts.new(params[:source], params[:destination], Settings[:directions])
         use_case.call
         use_case.costs
       end

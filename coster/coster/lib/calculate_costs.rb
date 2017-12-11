@@ -1,23 +1,22 @@
 module Coster
   class CalculateCosts
 
-    attr_reader :costs
+    attr_reader :costs, :directions
 
-    def initialize(options)
-      @options
+    def initialize(source, destination, directions_config)
+      @source = source
+      @destination = destination
+      @directions_config = directions_config
     end
 
     def call
+      @directions = directions_client.get(@source, @destination)
     end
-    
+
     private
 
-    def directions_host
-      @options.fetch(:directions_client_host)
-    end
-
     def directions_client
-      @client ||= DirectionsClient.new(directions_host)
+      @client ||= DirectionsClient.new(@directions_config)
     end
   end
 end
