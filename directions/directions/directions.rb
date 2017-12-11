@@ -1,6 +1,6 @@
 module Directions
   class API < Grape::API
-    version 'v1', using: :header, vendor: 'frontend'
+    version 'v1', using: :header, vendor: 'directions'
     format :json
     prefix :api
     formatter :json, Grape::Formatter::ActiveModelSerializers
