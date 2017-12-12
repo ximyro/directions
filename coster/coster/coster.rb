@@ -5,6 +5,9 @@ module Coster
   class API < Grape::API
     version 'v1', using: :header, vendor: 'coster'
     format :json
+    rescue_from CalculateError do |e|
+      error!({ message: e}, 400)
+    end
     prefix :api
     resource :cost do
       desc 'Return cost of path'

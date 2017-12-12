@@ -29,7 +29,7 @@ module Coster
     end
 
     def host
-      @options.fetch(:host)
+      Settings.dig("directions", "host")
     end
 
     def connection

@@ -32,9 +32,9 @@ module Coster
 
     def find_cost(duration, distance)
       begin
-        MACHINE_FEED + PER_MINUTE*duration/60.0 + PER_KILOMETR*distance/1000
+        machine_feed + per_minute*duration/60.0 + per_kilometr*distance/1000
       rescue
-        
+        ::Coster::API.logger.error("Error find cost for distance: #{distance}, duration: #{duration}")
       end
     end
 
