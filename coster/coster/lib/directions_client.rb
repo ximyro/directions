@@ -24,6 +24,10 @@ module Coster
 
     private
 
+    def logger
+      ::Coster::API.logger
+    end
+
     def host
       @options.fetch(:host)
     end

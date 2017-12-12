@@ -1,3 +1,4 @@
+require_relative './lib/calculate_error'
 require_relative './lib/calculate_costs'
 require_relative './lib/directions_client'
 module Coster
@@ -5,8 +6,6 @@ module Coster
     version 'v1', using: :header, vendor: 'coster'
     format :json
     prefix :api
-    formatter :json, Grape::Formatter::ActiveModelSerializers
-
     resource :cost do
       desc 'Return cost of path'
 			params do
@@ -20,7 +19,7 @@ module Coster
 				end
       end
       post :calculate do
-        use_case = CalculateCosts.new(params[:source], params[:destination], Settings[:directions])
+        use_case = CalculateCosts.new(params[:source], params[:destination])
         use_case.call
         {
           costs: use_case.costs,
@@ -29,6 +28,5 @@ module Coster
         }
       end
     end
-    formatter :json, Grape::Formatter::ActiveModelSerializers
   end
 end

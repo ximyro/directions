@@ -1,10 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
+require 'yaml'
 Bundler.require(:default)
-ActiveModelSerializers.config.adapter = :json
-Settings = {
-  directions: {
-    host: 'http://localhost:9293'
-  }
-}
+require_relative './settings'
 require_relative '../coster/coster'

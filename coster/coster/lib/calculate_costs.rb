@@ -1,17 +1,11 @@
 module Coster
-  class CalculateError < StandardError; end
   class CalculateCosts
 
     attr_reader :costs, :directions, :min_cost, :max_cost
 
-    MACHINE_FEED = 150
-    PER_MINUTE = 15
-    PER_KILOMETR = 38
-
-    def initialize(source, destination, directions_config)
+    def initialize(source, destination)
       @source = source
       @destination = destination
-      @directions_config = directions_config
       @costs = []
     end
 
@@ -26,7 +20,7 @@ module Coster
 
     def find_directions
       response = directions_client.get(@source, @destination)
-      raise CalculateError("Directions is not found") if !response || response["directions"].blank?
+      raise ::Coster::CalculateError, "Directions is not found"  if !response || response["directions"].blank?
       @directions = response["directions"]
     end
 
@@ -40,8 +34,20 @@ module Coster
       begin
         MACHINE_FEED + PER_MINUTE*duration/60.0 + PER_KILOMETR*distance/1000
       rescue
-        0
+        
       end
+    end
+
+    def machine_feed
+      Settings.dig("tarif", "machine_feed")
+    end
+
+    def per_minute
+      Settings.dig("tarif", "per_minute")
+    end
+
+    def per_kilometr
+      Settings.dig("tarif", "per_kilometr")
     end
 
     def find_min_cost
@@ -53,7 +59,7 @@ module Coster
     end
 
     def directions_client
-      @client ||= DirectionsClient.new(@directions_config)
+      @client ||= DirectionsClient.new(Settings[:directions])
     end
   end
 end

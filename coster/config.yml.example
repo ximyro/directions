@@ -1,0 +1,6 @@
+directions:
+  host: http://localhost:9293
+tarif:
+  machine_feed: 150
+  per_minute: 15
+  per_kilometr: 38
