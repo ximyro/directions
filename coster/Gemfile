@@ -7,3 +7,5 @@ gem 'grape'
 gem 'thin'
 gem 'http'
 gem 'oj'
+gem "mongoid"
+gem "bson_ext", :platforms => :mri

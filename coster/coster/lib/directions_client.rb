@@ -9,7 +9,7 @@ module Coster
 
     def get(source, destination)
       begin
-        connection.post(PATH, json:
+        response = connection.post(PATH, json:
         {
           source: source,
           destination: destination

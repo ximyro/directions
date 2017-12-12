@@ -1,6 +1,7 @@
 require_relative './lib/calculate_error'
 require_relative './lib/calculate_costs'
 require_relative './lib/directions_client'
+
 module Coster
   class API < Grape::API
     version 'v1', using: :header, vendor: 'coster'
