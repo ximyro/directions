@@ -8,12 +8,18 @@ module Coster
     end
 
     def get(source, destination)
-      connection.post(PATH, json:
+      begin
+        connection.post(PATH, json:
         {
-         source: source,
-         destination: destination
+          source: source,
+          destination: destination
         }
-      )
+        ).parse
+      rescue Exception => e
+        logger.error e.message
+        logger.error e.backtrace.join("\n")
+        return
+      end
     end
 
     private

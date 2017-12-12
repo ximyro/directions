@@ -22,7 +22,11 @@ module Coster
       post :calculate do
         use_case = CalculateCosts.new(params[:source], params[:destination], Settings[:directions])
         use_case.call
-        use_case.costs
+        {
+          costs: use_case.costs,
+          min: use_case.min_cost,
+          max: use_case.max_cost
+        }
       end
     end
     formatter :json, Grape::Formatter::ActiveModelSerializers

@@ -4,12 +4,12 @@ class GoogleDirectionsClient
 
   def initialize
   end
-  
+
   def calculate(source:, destination:, format: nil)
     format ||= DEFAULT_FORMAT
     begin
       response = connection.post(build_path(format), params: {
-        origin: format_coord(source), 
+        origin: format_coord(source),
         destination: format_coord(destination)
       }.merge!(default_params))
       routes = response.parse.dig("routes")
@@ -17,8 +17,9 @@ class GoogleDirectionsClient
         next if route["legs"].blank?
         result |= route["legs"].map do |leg|
           {
-            distance: leg.dig("distance", "value"),
-            duration: leg.dig("duration", "value")
+            distance: leg.dig("distance", "value"),#meters
+
+            duration: leg.dig("duration", "value")#seconds
           }
         end
       end
@@ -46,7 +47,8 @@ class GoogleDirectionsClient
   def default_params
     {
       alternatives: true,
-      mode: 'driving'
+      mode: 'driving',
+      units: "metric"
     }
   end
 
